@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with emergency details",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Auth UID" },
+        "email": { "type": "string", "description": "User email address" },
+        "displayName": { "type": "string", "description": "Full name or display name" },
+        "phone": { "type": "string", "description": "Contact number" },
+        "bloodType": { "type": "string", "description": "Blood type (e.g. O+, A+)" },
+        "allergies": { "type": "string", "description": "Medical allergies or conditions" },
+        "emergencyNotes": { "type": "string", "description": "Special emergency instructions" },
+        "regionCode": { "type": "string", "description": "Philippine Region Code" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp (FieldValue.serverTimestamp())" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp (FieldValue.serverTimestamp())" }
+      },
+      "required": ["userId", "email", "displayName", "createdAt", "updatedAt"]
+    },
+    "ChecklistItem": {
+      "title": "ChecklistItem",
+      "description": "Emergency preparedness checklist item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "userId": { "type": "string", "description": "Owner Auth UID" },
+        "title": { "type": "string", "description": "Item title" },
+        "category": { "type": "string", "description": "Item category (e.g. Water, First Aid, Documents)" },
+        "description": { "type": "string", "description": "Instructions or quantity" },
+        "isChecked": { "type": "boolean", "description": "Whether completed" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["id", "userId", "title", "category", "isChecked", "createdAt", "updatedAt"]
+    },
+    "EmergencyContact": {
+      "title": "EmergencyContact",
+      "description": "Personal emergency contact",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Contact ID" },
+        "userId": { "type": "string", "description": "Owner Auth UID" },
+        "name": { "type": "string", "description": "Contact name" },
+        "phone": { "type": "string", "description": "Phone number" },
+        "relationship": { "type": "string", "description": "Relationship (Family, Friend, Doctor)" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["id", "userId", "name", "phone", "relationship", "createdAt", "updatedAt"]
+    },
+    "FeedbackReport": {
+      "title": "FeedbackReport",
+      "description": "User disaster app feedback or situation report",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Feedback ID" },
+        "userId": { "type": "string", "description": "Submitter Auth UID" },
+        "userName": { "type": "string", "description": "User display name" },
+        "category": { "type": "string", "description": "Feedback or disaster topic" },
+        "message": { "type": "string", "description": "Feedback text" },
+        "rating": { "type": "integer", "description": "Rating 1 to 5" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["id", "userId", "userName", "category", "message", "rating", "createdAt"]
+    },
+    "DisasterAlert": {
+      "title": "DisasterAlert",
+      "description": "Emergency disaster broadcast alert and situation report",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Alert ID" },
+        "userId": { "type": "string", "description": "Broadcaster Auth UID" },
+        "title": { "type": "string", "description": "Alert headline title" },
+        "category": { "type": "string", "description": "Disaster type (BAGYO, LINDOL, SUNOG, BAHA, BULKAN, LANDSLIDE)" },
+        "severity": { "type": "string", "description": "Severity level (CRITICAL, SERIOUS, ADVISORY)" },
+        "message": { "type": "string", "description": "Alert details and instructions" },
+        "locationCity": { "type": "string", "description": "Affected city or region" },
+        "sourceAgency": { "type": "string", "description": "Issuing agency (NDRRMC, PAGASA, PHIVOLCS, BFP)" },
+        "isTest": { "type": "boolean", "description": "Whether this is a drill or test alert" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["id", "userId", "title", "category", "severity", "message", "locationCity", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User private profile and emergency info"
+    },
+    "/users/{userId}/checklist_items/{itemId}": {
+      "schema": { "$ref": "#/entities/ChecklistItem" },
+      "description": "User personal emergency checklist items"
+    },
+    "/users/{userId}/contacts/{contactId}": {
+      "schema": { "$ref": "#/entities/EmergencyContact" },
+      "description": "User personal emergency contacts"
+    },
+    "/feedback/{feedbackId}": {
+      "schema": { "$ref": "#/entities/FeedbackReport" },
+      "description": "User submitted app feedback and reports"
+    },
+    "/alerts/{alertId}": {
+      "schema": { "$ref": "#/entities/DisasterAlert" },
+      "description": "Emergency disaster alerts and test broadcast notifications"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "ReadyAI",
+  "description": "ReadyAI – Emergency & Disaster Information App for the Philippines featuring emergency categories, official hotlines, emergency checklist, and AI emergency assistant.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
